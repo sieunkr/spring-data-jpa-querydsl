@@ -4,6 +4,8 @@ import com.example.demo.entity.Brand;
 import com.example.demo.entity.Coffee;
 import com.example.demo.repository.BrandRepository;
 import com.example.demo.repository.CoffeeRepository;
+import com.example.demo.service.CoffeeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,15 +15,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/test")
+@RequiredArgsConstructor
 public class HomeController {
 
     private final BrandRepository brandRepository;
-    private final CoffeeRepository coffeeRepository;
+    private final CoffeeService coffeeService;
 
-    public HomeController(BrandRepository brandRepository, CoffeeRepository coffeeRepository) {
-        this.brandRepository = brandRepository;
-        this.coffeeRepository = coffeeRepository;
-    }
 
     @GetMapping("/brand")
     public Brand findAll(@RequestParam("id") Long id) {
@@ -35,6 +34,6 @@ public class HomeController {
 
     @GetMapping("/coffees")
     public List<Coffee> findAllCoffeeByLimitPrice() {
-        return coffeeRepository.findLimitByPrice(1500L);
+        return coffeeService.findLimitByPrice(1200L);
     }
 }
